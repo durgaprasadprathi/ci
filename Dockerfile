@@ -16,6 +16,7 @@ RUN npm install --silent
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL $REACT_APP_API_URL
 
+
 # add app
 COPY . .
 
@@ -26,7 +27,7 @@ FROM nginx:latest
 
 EXPOSE 80
 
-COPY --from=frontend_dash /app/build/ /var/www/html/frontend_build/
+COPY --from=admin_dash /app/build/ /var/www/html/admin_build/
 
 COPY /nginx/default.conf /etc/nginx/conf.d
 
