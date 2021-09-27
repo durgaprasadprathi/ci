@@ -1,5 +1,6 @@
 version: "3.3"
 services:
+  #admin API
   nodejs_admin:
     restart: always
     build: 
@@ -13,18 +14,18 @@ services:
       - "30001:9000"
     extra_hosts:
       - "localhost:127.0.0.1"
-    depends_on: 
-      - nodejs_gold
     container_name: admin-api
 
-
+  #admin dashboard
   react_admin:
     restart: always
     build: 
       context: ./adminDash
       dockerfile: Dockerfile
       args:
-        - REACT_APP_API_URL=http://localhost:30001 
+        - REACT_APP_API_URL=http://localhost:30001 # admin api path
+        - REACT_APP_INSIGHT_PLATFORM=AZURE,AWS,GCP
+        - REACT_APP_WEBSITE_SUBTYPE=Admin1
     ports:
       - '3005:80'
     networks:
@@ -32,7 +33,7 @@ services:
     depends_on: 
       - nodejs_admin
     container_name: admin_dash
-
+ 
 networks:
   frontend:
 
